@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+    <head>
+            <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+
+    </head>
+    <button name="submit" class="action_btn xml" type="submit" value="XML" onclick="myFunction()">XML</button>
+    <button name="submit" class="action_btn json" type="submit" value="JSON" onclick="myFunction2()">JSON</button>
+
+    <script>
+    function myFunction()
+    {
+        $.ajax({
+            url: 'Lab10.json',
+            type: 'GET',
+            datatype: 'json',
+            success: function (data) {
+                var json = JSON.parse(data);
+                DisplayData(json);
+            },
+            error: function (jqXHR, textStatus, errorThrown) { alert(textStatus); }
+
+        });
+    }
+            function myFunction2() {
+            $.ajax({
+                url: 'Lab10.xml',
+                type: 'GET',
+                datatype: 'xml',
+                success: function (data, status, request) {
+                    ProcessXMLDocument(request.responseXML);
+                },
+                error: function (jqXHR, textStatus, errorThrown) { alert(textStatus); }
+            });
+        }
+        function ProcessXMLDocument(xml) {
+            var titleText = $(xml).find("entry title").first().text();
+            $("#results").text(titleText);
+        }
+   
+    </script>
+</html>
